@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "config.h"
-#include "config_parser.h"
-#include "utils.h"
+#include "./parser/config_parser.h"
+#include "../utils/utils.h"
 
 struct config* current_config =  NULL;
 

@@ -59,35 +59,35 @@ debug: before_debug out_debug after_debug
 out_debug: before_debug $(OBJ_DEBUG) $(DEP_DEBUG)
 	$(LD) $(LIBDIR_DEBUG) -o $(OUT_DEBUG) $(OBJ_DEBUG)  $(LDFLAGS_DEBUG) $(LIB_DEBUG)
 
-$(OBJDIR_DEBUG)/http_writer.o: http_writer.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c http_writer.c -o $(OBJDIR_DEBUG)/http_writer.o
+$(OBJDIR_DEBUG)/http_writer.o: http/writer/http_writer.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c http/writer/http_writer.c -o $(OBJDIR_DEBUG)/http_writer.o
 
-$(OBJDIR_DEBUG)/utils.o: utils.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c utils.c -o $(OBJDIR_DEBUG)/utils.o
+$(OBJDIR_DEBUG)/utils.o: utils/utils.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c utils/utils.c -o $(OBJDIR_DEBUG)/utils.o
 
-$(OBJDIR_DEBUG)/parent.o: parent.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c parent.c -o $(OBJDIR_DEBUG)/parent.o
+$(OBJDIR_DEBUG)/parent.o: prefork/parent/parent.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c prefork/parent/parent.c -o $(OBJDIR_DEBUG)/parent.o
 
-$(OBJDIR_DEBUG)/mime.o: mime.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c mime.c -o $(OBJDIR_DEBUG)/mime.o
+$(OBJDIR_DEBUG)/mime.o: http/mime/mime.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c http/mime/mime.c -o $(OBJDIR_DEBUG)/mime.o
 
 $(OBJDIR_DEBUG)/main.o: main.c
 	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c main.c -o $(OBJDIR_DEBUG)/main.o
 
-$(OBJDIR_DEBUG)/child.o: child.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c child.c -o $(OBJDIR_DEBUG)/child.o
+$(OBJDIR_DEBUG)/child.o: prefork/child/child.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c prefork/child/child.c -o $(OBJDIR_DEBUG)/child.o
 
-$(OBJDIR_DEBUG)/http_parser.o: http_parser.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c http_parser.c -o $(OBJDIR_DEBUG)/http_parser.o
+$(OBJDIR_DEBUG)/http_parser.o: http/parser/http_parser.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c http/parser/http_parser.c -o $(OBJDIR_DEBUG)/http_parser.o
 
-$(OBJDIR_DEBUG)/config_parser.o: config_parser.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c config_parser.c -o $(OBJDIR_DEBUG)/config_parser.o
+$(OBJDIR_DEBUG)/config_parser.o: config/parser/config_parser.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c config/parser/config_parser.c -o $(OBJDIR_DEBUG)/config_parser.o
 
-$(OBJDIR_DEBUG)/config.o: config.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c config.c -o $(OBJDIR_DEBUG)/config.o
+$(OBJDIR_DEBUG)/config.o: config/config.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c config/config.c -o $(OBJDIR_DEBUG)/config.o
 
-$(OBJDIR_DEBUG)/logger.o: logger.c
-	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c logger.c -o $(OBJDIR_DEBUG)/logger.o
+$(OBJDIR_DEBUG)/logger.o: logger/logger.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c logger/logger.c -o $(OBJDIR_DEBUG)/logger.o
 
 clean_debug: 
 	rm -f $(OBJ_DEBUG) $(OUT_DEBUG)
@@ -105,35 +105,35 @@ release: before_release out_release after_release
 out_release: before_release $(OBJ_RELEASE) $(DEP_RELEASE)
 	$(LD) $(LIBDIR_RELEASE) -o $(OUT_RELEASE) $(OBJ_RELEASE)  $(LDFLAGS_RELEASE) $(LIB_RELEASE)
 
-$(OBJDIR_RELEASE)/http_writer.o: http_writer.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c http_writer.c -o $(OBJDIR_RELEASE)/http_writer.o
+$(OBJDIR_RELEASE)/http_writer.o: http/writer/http_writer.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c http/writer/http_writer.c -o $(OBJDIR_RELEASE)/http_writer.o
 
-$(OBJDIR_RELEASE)/utils.o: utils.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c utils.c -o $(OBJDIR_RELEASE)/utils.o
+$(OBJDIR_RELEASE)/utils.o: utils/utils.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c utils/utils.c -o $(OBJDIR_RELEASE)/utils.o
 
-$(OBJDIR_RELEASE)/parent.o: parent.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c parent.c -o $(OBJDIR_RELEASE)/parent.o
+$(OBJDIR_RELEASE)/parent.o: prefork/parent/parent.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c prefork/parent/parent.c -o $(OBJDIR_RELEASE)/parent.o
 
-$(OBJDIR_RELEASE)/mime.o: mime.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c mime.c -o $(OBJDIR_RELEASE)/mime.o
+$(OBJDIR_RELEASE)/mime.o: http/mime/mime.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c http/mime/mime.c -o $(OBJDIR_RELEASE)/mime.o
 
 $(OBJDIR_RELEASE)/main.o: main.c
 	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c main.c -o $(OBJDIR_RELEASE)/main.o
 
-$(OBJDIR_RELEASE)/child.o: child.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c child.c -o $(OBJDIR_RELEASE)/child.o
+$(OBJDIR_RELEASE)/child.o: prefork/child/child.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c prefork/child/child.c -o $(OBJDIR_RELEASE)/child.o
 
-$(OBJDIR_RELEASE)/http_parser.o: http_parser.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c http_parser.c -o $(OBJDIR_RELEASE)/http_parser.o
+$(OBJDIR_RELEASE)/http_parser.o: http/parser/http_parser.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c http/parser/http_parser.c -o $(OBJDIR_RELEASE)/http_parser.o
 
-$(OBJDIR_RELEASE)/config_parser.o: config_parser.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c config_parser.c -o $(OBJDIR_RELEASE)/config_parser.o
+$(OBJDIR_RELEASE)/config_parser.o: config/parser/config_parser.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c config/parser/config_parser.c -o $(OBJDIR_RELEASE)/config_parser.o
 
-$(OBJDIR_RELEASE)/config.o: config.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c config.c -o $(OBJDIR_RELEASE)/config.o
+$(OBJDIR_RELEASE)/config.o: config/config.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c config/config.c -o $(OBJDIR_RELEASE)/config.o
 
-$(OBJDIR_RELEASE)/logger.o: logger.c
-	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c logger.c -o $(OBJDIR_RELEASE)/logger.o
+$(OBJDIR_RELEASE)/logger.o: logger/logger.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c logger/logger.c -o $(OBJDIR_RELEASE)/logger.o
 
 clean_release: 
 	rm -f $(OBJ_RELEASE) $(OUT_RELEASE)

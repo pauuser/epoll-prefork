@@ -1,5 +1,5 @@
 #include "config_parser.h"
-#include "utils.h"
+#include "../../utils/utils.h"
 
 
 int is_alphanumeric(char c)

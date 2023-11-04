@@ -1,5 +1,5 @@
 #include "mime.h"
-#include "utils.h"
+#include "../../utils/utils.h"
 #include <string.h>
 
 const char* detect_mime_type(char *filename, FILE *fd)

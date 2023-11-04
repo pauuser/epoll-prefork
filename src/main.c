@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "config.h"
-#include "parent.h"
-#include "logger.h"
+#include "./config/config.h"
+#include "./prefork/parent/parent.h"
+#include "./logger/logger.h"
 #include <sys/prctl.h>
 #include <signal.h>
 

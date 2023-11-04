@@ -11,13 +11,13 @@
 #include <sys/prctl.h>
 #include <sys/epoll.h>
 #include "child.h"
-#include "http_parser.h"
-#include "parent.h"
-#include "config.h"
-#include "mime.h"
-#include "http_writer.h"
-#include "utils.h"
-#include "logger.h"
+#include "../../http/parser/http_parser.h"
+#include "../parent/parent.h"
+#include "../../config/config.h"
+#include "../../http/mime/mime.h"
+#include "../../http/writer/http_writer.h"
+#include "../../utils/utils.h"
+#include "../../logger/logger.h"
 
 void write_file(FILE *file_d, int socket_d);
 

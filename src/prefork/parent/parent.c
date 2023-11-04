@@ -6,10 +6,10 @@
 #include <netinet/in.h>
 #include <time.h>
 #include <stdio.h>
-#include "child.h"
-#include "utils.h"
-#include "config.h"
-#include "logger.h"
+#include "../child/child.h"
+#include "../../utils/utils.h"
+#include "../../config/config.h"
+#include "../../logger/logger.h"
 
 static server_item *children;
 int used_children = 0;

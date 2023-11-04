@@ -1,8 +1,7 @@
 #ifndef CHILD_H_INCLUDED
 #define CHILD_H_INCLUDED
 
-
-#include "parent.h"
+#include "../parent/parent.h"
 
 #define SERVER_NAME "epoll-prefork"
 #define HTTP_1_0 "HTTP/1.0"
