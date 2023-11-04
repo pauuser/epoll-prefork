@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:  
+  nginx:
+    image: nginx
+    volumes:
+      - ./logs:/var/log/nginx #log файлы.
+      - ./nginx.conf:/etc/nginx/nginx.conf #Конфигурация nginx.
+      - C:\Users\Pavel\Desktop\parcorpus\static:/static
+    ports:
+      - "80:80"
+      - "443:443"
+    restart:
+      always
