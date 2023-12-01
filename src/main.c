@@ -39,7 +39,8 @@ int main()
 
     set_signal_handlers();
 
-    while (1){
+    while (1)
+    {
         check_children();
         usleep(CHILD_CHECK_INTERVAL_USEC);
     }
