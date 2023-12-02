@@ -6,10 +6,12 @@
 #include <netinet/in.h>
 #include <time.h>
 #include <stdio.h>
+#include <string.h>
 #include "../child/child.h"
 #include "../../utils/utils.h"
 #include "../../config/config.h"
 #include "../../logger/logger.h"
+#include <stdlib.h>
 
 static server_item *children;
 int used_children = 0;
@@ -70,7 +72,8 @@ void bind_server(config *conf)
 
     int opt = 1;
     setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
-    if (bind(server_socket, (struct sockaddr *) &addr, sizeof(addr)) < 0) 
+    int bres;
+    if ((bres = bind(server_socket, (struct sockaddr *) &addr, sizeof(addr))) < 0) 
     {
         die_with_error("bind failed");
     }

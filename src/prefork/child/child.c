@@ -212,8 +212,14 @@ void set_parent_death_signal()
 void start_processing_loop(int epoll_fd, config* config, int server_socket, server_item *item)
 {
     int processed_clients = 0;
-    while (processed_clients >= config->child_max_queries)
+    while (1)
     {
+        if (processed_clients >= config->child_max_queries)
+        {
+            log(INFO, "Clients limit served, process %d is shutting down", item->pid);
+            exit(0);
+        }
+
         struct epoll_event events[10];
         ssize_t events_count = get_events(epoll_fd, events, item);
         
@@ -221,9 +227,6 @@ void start_processing_loop(int epoll_fd, config* config, int server_socket, serv
 
         process_events(events, events_count, server_socket, item, &processed_clients); 
     }
-
-    log(INFO, "Clients limit served, process %d is shutting down", item->pid);
-    exit(0);
 }
 
 ssize_t get_events(int epoll_fd, struct epoll_event* events, server_item *item)
@@ -382,7 +385,7 @@ int configure_epoll(int server_socket)
     event.data.ptr = (void *)((uintptr_t)server_socket);
     event.events = EPOLLIN | EPOLLERR | EPOLLEXCLUSIVE;
 
-    if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, server_socket, &event) != 0) 
+    if(epoll_ctl(epoll_fd, EPOLL_CTL_ADD, server_socket, &event) != 0) 
     {
         log(ERROR, "Unable to set socket for epoll: epoll_ctl failed");
         exit(EXIT_FAILURE);

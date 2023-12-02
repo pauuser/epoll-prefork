@@ -33,7 +33,7 @@ static void set_signal_handlers()
 
 int main()
 {
-    init_logger("log.log");
+    init_logger("prefork.log");
     
     read_config();
     init_server();
