@@ -28,6 +28,7 @@ static void set_signal_handlers()
     signal(SIGKILL, quit_handler);
     signal(SIGSEGV, quit_handler);
     signal(SIGTERM, quit_handler);
+    signal(SIGQUIT, quit_handler);
 }
 
 int main()
@@ -44,8 +45,6 @@ int main()
         check_children();
         usleep(CHILD_CHECK_INTERVAL_USEC);
     }
-
-    signal(SIGQUIT, quit_handler);
 
     return 0;
 }

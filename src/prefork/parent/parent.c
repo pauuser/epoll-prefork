@@ -192,7 +192,7 @@ void stop_server()
 }
 
 /*
-* Handle child's death gacefully
+* Handle child's death gracefully
 */
 void sigchld_handler(int sig)
 {
