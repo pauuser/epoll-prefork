@@ -1,17 +1,4 @@
 #include "parent.h"
-#include <sys/mman.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <netinet/in.h>
-#include <time.h>
-#include <stdio.h>
-#include <string.h>
-#include "../child/child.h"
-#include "../../utils/utils.h"
-#include "../../config/config.h"
-#include "../../logger/logger.h"
-#include <stdlib.h>
 
 static server_item *children;
 int used_children = 0;
@@ -42,6 +29,7 @@ void init_server()
 
     config *config = config_get();
     bind_server(config);
+    chroot(config->hosts[0].root);
 
     int base_fork = config->min_children;
     if (base_fork < 1 || base_fork > MAX_CHILD_COUNT)

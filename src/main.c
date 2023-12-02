@@ -9,12 +9,14 @@
 
 #define CHILD_CHECK_INTERVAL_USEC 50000L // 50 ms
 
-void read_config(){
+void read_config()
+{
     FILE *file = fopen("./server.cfg", "r");
     config_read_from_file(file);
 }
 
-static void quit_handler(int signo) {
+static void quit_handler(int signo) 
+{
     stop_server();
     exit(0);
 }

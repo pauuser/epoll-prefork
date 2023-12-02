@@ -1,29 +1,37 @@
 #ifndef HTTP_PARSER_H_INCLUDED
 #define HTTP_PARSER_H_INCLUDED
 
+#include "utils.h"
+
+#include <string.h>
+#include <sys/param.h>
+
 #define HEADER_SIZE_LIMIT 4096
 #define PATH_SIZE_LIMIT 256
 #define METHOD_SIZE_LIMIT 16
 #define HTTP_VERSION_SIZE_LIMIT 16
 
-
 #define STOP_ERROR(req) { req->state = STATE_ERROR; return 0; }
 
-typedef enum {
+typedef enum 
+{
     STATE_ERROR,
     STATE_PROCESSING_REQUEST_LINE,
     STATE_PROCESSING_HEADER,
     STATE_HEADER_DONE
-} http_parse_request_state;
+} 
+http_parse_request_state;
 
-struct http_param_list{
+struct http_param_list
+{
     char *key;
     char *value;
     struct http_param_list *next;
 };
 typedef struct http_param_list http_param_list;
 
-struct http_parse_request{
+struct http_parse_request
+{
     http_parse_request_state state;
     int seq_empty_line_count;
     char header[HEADER_SIZE_LIMIT + 1];

@@ -14,9 +14,9 @@
 
 \subsection{Подготовка исследования}
 
-Для сравнения производительности разработанного сервера с nginx необходимо установить утилиту для нагрузочного тестирования Apache Benchmark. Данный инструмент позволяет исследовать допустимые границы количества запросов, которое сервер может обработать в секунду.
+Для сравнения производительности разработанного сервера с nginx необходимо установить утилиту для нагрузочного тестирования Apache Bench-\\mark~\cite{ab}. Данный инструмент позволяет исследовать допустимые границы количества запросов, которое сервер может обработать в секунду.
 
-Также необходимо настроить nginx на отдачу статического контента. Конфигурация nginx представлена в листинге \ref{nginx}.
+Также необходимо настроить nginx~\cite{nginx} на отдачу статического контента. Конфигурация nginx представлена в листинге \ref{nginx}.
 
 \begin{lstlisting}[caption={Конфигурация nginx}, label=nginx]
 worker_processes  5;
@@ -45,7 +45,7 @@ http {
 }
 \end{lstlisting}
 
-Для запуска nginx используется Docker. Содержимое используемого файла docker-compose.yml представлено в листинге \ref{compose}.
+Для запуска nginx используется Docker~\cite{docker}. Содержимое используемого файла docker-compose.yml представлено в листинге \ref{compose}.
 
 \begin{lstlisting}[caption={Конфигурация docker-compose.yml}, label=compose]
 version: '3.7'
@@ -70,7 +70,7 @@ services:
 \captionsetup{singlelinecheck = false, justification=centering}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.9]{img/jpg.pdf}
+	\includegraphics[scale=0.9]{img/jpg.jpg}
 	\caption{Зависимость p50 от числа запросов (jpg)}
 	\label{jpg-comparison-n}
 \end{figure}
@@ -80,7 +80,7 @@ services:
 \captionsetup{singlelinecheck = false, justification=centering}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.9]{img/pdf.pdf}
+	\includegraphics[scale=0.9]{img/pdf.jpg}
 	\caption{Зависимость p50 от числа запросов (pdf)}
 	\label{pdf-comparison-n}
 \end{figure}
@@ -89,7 +89,7 @@ services:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.9]{img/jpg-с.pdf}
+	\includegraphics[scale=0.9]{img/jpg-c.jpg}
 	\caption{Зависимость p50 от числа конкурентных запросов (jpg)}
 	\label{jpg-comparison-c}
 \end{figure}
@@ -97,14 +97,14 @@ services:
 \captionsetup{singlelinecheck = false, justification=centering}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.9]{img/pdf-с.pdf}
+	\includegraphics[scale=0.9]{img/pdf-c.jpg}
 	\caption{Зависимость p50 от числа конкурентных запросов (pdf)}
 	\label{pdf-comparison-c}
 \end{figure}
 
 \subsection*{Вывод}
 
-В результате проведенных замеров установлено, что разработанный сервер работает медленнее, чем nginx. Время ответа на запросы разработанным сервером в 1.5 -- 2 раза больше, чем время ответа от nginx. Это может быть связано с тем, что nginx -- более оптимизированное программное обеспечение, предназначенное для профессионалов.
+В результате проведенных замеров установлено, что разработанный сервер работает медленнее, чем nginx. Время ответа на запросы разработанным сервером в 1.5 -- 2 раза больше, чем время ответа от nginx. Это может быть связано с тем, что nginx -- более оптимизированное программное обеспечение, предназначенное для профессионалов~\cite{nginx-tuning}.
 
 Однако нагрузочное тестирование показало, что сервер работает верно: программа корректно обработала все запросы, посылаемые ей в рамках исследования.
 

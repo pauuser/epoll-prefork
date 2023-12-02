@@ -1,11 +1,4 @@
 #include "utils.h"
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <time.h>
-#include <stdlib.h>
-#include "../logger/logger.h"
 
 int is_wspace(char c)
 {

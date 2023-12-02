@@ -1,10 +1,11 @@
 #include "config_parser.h"
-#include "../../utils/utils.h"
-
 
 int is_alphanumeric(char c)
 {
-    return c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c == '_';
+    return c >= '0' && c <= '9' || 
+        c >= 'a' && c <= 'z' || 
+        c >= 'A' && c <= 'Z' || 
+        c == '_';
 }
 
 char *consume(char *in, char *str)
@@ -19,7 +20,7 @@ char *consume(char *in, char *str)
     return in;
 }
 
-char *read_ident(char* in, char * out, int limit)
+char *read_ident(char *in, char  *out, int limit)
 {
     in = ltrim(in);
     int normal_break = 0;
@@ -59,7 +60,7 @@ char *read_string(char *in, char *out, int limit)
     return in;
 }
 
-char *read_int(char *in, int*out)
+char *read_int(char *in, int *out)
 {
     *out = 0;
     in = ltrim(in);

@@ -1,15 +1,6 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include "config.h"
-#include "./parser/config_parser.h"
-#include "../utils/utils.h"
 
 struct config* current_config =  NULL;
-
-char *read_host(struct config *config, char *buf);
-char *read_block(struct config *config, char *buf);
-void set_default(config *config);
 
 struct config *config_get()
 {
@@ -35,7 +26,7 @@ void set_default(config *config)
 void config_read_from_file(FILE *file)
 {
     int length = file_length(file);
-    char *buffer = malloc (length+1);
+    char *buffer = malloc(length + 1);
     char *orig_buffer = buffer;
     memset(buffer, 0, length+1);
     fread (buffer, 1, length, file);
@@ -141,9 +132,8 @@ char *read_host(config *config, char *buf)
     return buf;
 }
 
-config_host* find_host(char *host)
+config_host *find_host(char *host)
 {
-    // @TODO implement real host masks
     if (current_config == NULL)
     {
         return NULL;

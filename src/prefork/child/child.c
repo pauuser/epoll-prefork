@@ -1,43 +1,4 @@
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/sendfile.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <signal.h>
-#include <unistd.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <sys/prctl.h>
-#include <sys/epoll.h>
 #include "child.h"
-#include "../../http/parser/http_parser.h"
-#include "../parent/parent.h"
-#include "../../config/config.h"
-#include "../../http/mime/mime.h"
-#include "../../http/writer/http_writer.h"
-#include "../../utils/utils.h"
-#include "../../logger/logger.h"
-
-void write_file(FILE *file_d, int socket_d);
-
-void write_error_headers(int fd);
-
-void write_base_headers(int fd);
-
-void respond_file(int fd, config_host *host, http_parse_request* request);
-
-int get_epoll_fd();
-
-int configure_epoll(int server_socket);
-
-void set_parent_death_signal();
-
-ssize_t get_events(int epoll_fd, struct epoll_event* events, server_item *item);
-
-void start_processing_loop(int epoll_fd, config* config, int server_socket, server_item *item);
-
-http_parse_request* read_request(int fd);
 
 int get_version_errors(http_parse_request* request, int fd, server_item *item)
 {

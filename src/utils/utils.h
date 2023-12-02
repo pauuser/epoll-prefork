@@ -3,6 +3,11 @@
 
 #include <netinet/in.h>
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <time.h>
+#include <stdlib.h>
+#include "logger.h"
 
 #if !defined(WIN32)
 #define stricmp(a, b) strcasecmp(a,b)

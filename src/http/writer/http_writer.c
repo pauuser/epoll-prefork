@@ -1,6 +1,3 @@
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "http_writer.h"
 
 void http_write_status_line(int fd, const char *http_version, const char *status_code, const char *error_phrase)

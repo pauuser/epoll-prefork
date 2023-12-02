@@ -12,7 +12,7 @@ LD = g++
 WINDRES = windres
 
 INC = 
-CFLAGS = -Wall
+CFLAGS = -Wall -Iconfig -Iconfig/parser -Ihttp/mime -Iprefork -Ihttp/parser -Ihttp/writer -Ilogger -Iprefork/child -Iprefork/parent -Iutils
 RESINC = 
 LIBDIR = 
 LIB = 

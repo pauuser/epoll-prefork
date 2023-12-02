@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdarg.h>
-#include <time.h>
-#include <semaphore.h> 
 #include "logger.h"
 
 static FILE* log_file = NULL;

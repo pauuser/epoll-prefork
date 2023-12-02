@@ -3,19 +3,21 @@
 #define MAX_CHILD_COUNT 1000
 
 #include <sys/types.h>
-
-typedef enum {
-    SERVER_ITEM_AVAILABLE,
-    SERVER_ITEM_BUSY,
-    SERVER_ITEM_DEAD
-} ServerItemState;
-
-struct server_item{
-    ServerItemState state;
-    pid_t pid;
-    int served;
-};
-typedef struct server_item server_item;
+#include <sys/mman.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <netinet/in.h>
+#include <time.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include "child.h"
+#include "utils.h"
+#include "config.h"
+#include "logger.h"
+#include "common.h"
 
 void init_server();
 

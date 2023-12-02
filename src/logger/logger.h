@@ -1,6 +1,11 @@
 #ifndef LOGGER_H_INCLUDED
 #define LOGGER_H_INCLUDED
 
+#include <stdio.h>
+#include <stdarg.h>
+#include <time.h>
+#include <semaphore.h> 
+
 typedef enum LOG_LEVEL 
 {
     WARNING = 0,
