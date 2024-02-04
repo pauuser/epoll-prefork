@@ -16,4 +16,6 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2.0.0
     - name: make
-      run: make -f ./src/Makefile
+      run: |
+        cd ./src
+        make
