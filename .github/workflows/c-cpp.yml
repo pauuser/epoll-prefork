@@ -13,4 +13,4 @@ jobs:
 
     steps:
     - name: make
-      run: cd src && make
+      run: make -f src/Makefile
