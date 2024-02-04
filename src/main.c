@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "./config/config.h"
-#include "./prefork/parent/parent.h"
-#include "./logger/logger.h"
+#include "config.h"
+#include "parent.h"
+#include "logger.h"
 #include <sys/prctl.h>
 #include <signal.h>
 
-#define CHILD_CHECK_INTERVAL_USEC 50000L // 50 ms
+#define CHILD_CHECK_INTERVAL_USEC 10000L // 10 ms
 
 void read_config()
 {
@@ -35,7 +35,7 @@ static void set_signal_handlers()
 
 int main()
 {
-    init_logger("prefork.log");
+    init_logger("./prefork.log");
     
     read_config();
     init_server();

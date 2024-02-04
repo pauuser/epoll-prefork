@@ -177,11 +177,14 @@ void http_parse_free_request(http_parse_request *request)
     while (curr_param != NULL)
     {
         http_param_list *next = curr_param->next;
-        free(curr_param->key);
-        free(curr_param->value);
-        free(curr_param);
+        if (curr_param && curr_param->key)
+            free(curr_param->key);
+        if (curr_param && curr_param->value)
+            free(curr_param->value);
+        if (curr_param)
+            free(curr_param);
         curr_param = next;
     }
-    
-    free(request);
+    if (request)
+        free(request);
 }

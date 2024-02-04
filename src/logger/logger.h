@@ -5,6 +5,15 @@
 #include <stdarg.h>
 #include <time.h>
 #include <semaphore.h> 
+#include <signal.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string.h>
+#include <fcntl.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+
+#define LOGGER_SLEEP_TIME_USEC 10000L // 10 ms
 
 typedef enum LOG_LEVEL 
 {

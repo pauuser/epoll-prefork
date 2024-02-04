@@ -1,4 +1,6 @@
 #include "logger.h"
+#include <errno.h>
+#include <string.h>
 
 static FILE* log_file = NULL;
 static sem_t semaphore;
@@ -8,7 +10,6 @@ void init_logger(const char* filename)
     sem_init(&semaphore, 0, 1);
 
     log_file = fopen(filename, "a");
-
     if (log_file == NULL) 
     {
         printf("Failed to open log file.\n");
@@ -44,13 +45,12 @@ void log(enum LOG_LEVEL level, const char *fmt, ...)
     va_start(ptr, fmt);
     const char* level_string = get_level_string(level);
 
-    sem_wait(&semaphore); 
+    sem_wait(&semaphore);
     if (log_file)
     {
         fprintf(log_file, "[%s] [%s] [pid %d] ", timestamp, level_string, getpid());
         vfprintf(log_file, fmt, ptr);
         fprintf(log_file, "\n");
-        fflush(log_file);
     }
     else
     {

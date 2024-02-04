@@ -17,7 +17,7 @@ struct config *config_get()
 void set_default(config *config)
 {
     config->bind_to = "127.0.0.1:80";
-    config->child_max_queries = 100;
+    config->child_max_queries = 5000;
     config->min_children = 1;
     config->max_children = 2;
     config->hosts_count = 0;
@@ -39,7 +39,8 @@ void config_read_from_file(FILE *file)
         buffer = read_block(new_conf, buffer);
         buffer = ltrim(buffer);
     }
-    free(orig_buffer);
+    if (orig_buffer)
+        free(orig_buffer);
     current_config = new_conf;
 }
 

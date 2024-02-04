@@ -26,22 +26,27 @@ error_log  /var/log/nginx/error.log info;
 events {
 \end{lstlisting}
 
-\begin{lstlisting}[title={Продолжение листинга \ref{nginx}}, label=nginx1, firstnumber=6]
-	worker_connections  4096; 
+\begin{lstlisting}[title={Окончание листинга \ref{nginx}}, label=nginx1, firstnumber=6]
+  worker_connections  4096; 
 }
 
 http {
-	charset utf-8;
-	
-	server { 
-		location / {
-			root /static;
-		}
-		
-		location /status {
-			stub_status;
-		}
+charset utf-8;
+
+server { 
+	location / {
+		include  /etc/nginx/mime.types;
+		# don't cache it
+		proxy_no_cache 1;
+		# even if cached, don't try to use it
+		proxy_cache_bypass 1; 
+		root /static;
 	}
+	
+	location /status {
+		stub_status;
+	}
+}
 }
 \end{lstlisting}
 
@@ -56,6 +61,9 @@ services:
     - ./logs:/var/log/nginx
     - ./nginx.conf:/etc/nginx/nginx.conf
     - C:\Users\Pavel\Desktop\parcorpus\static:/static
+\end{lstlisting}
+    
+\begin{lstlisting}[title={Окончание листинга \ref{compose}}, label=compose1, firstnumber=9]
   ports:
     - "80:80"
     - "443:443"
@@ -65,47 +73,28 @@ services:
 
 \subsection{Результаты замеров}
 
-Первый замер проводился для jpg-файла размером 53 Кб. Максимальное число одновременных соединений не превышало 10. На рисунке \ref{jpg-comparison-n} представлена зависимость 50 процентиля p50 (в мс) от числа запросов.
+Замеры проводились для двух файлов: для jpg-файла размером 53 Кб и pdf-файла размером 2.11 Мб. Были произведены замеры при постоянном числе запросов 10000 для jpg-файла и 1500 для pdf-файла и изменяющимся максимальным числом конкурентных запросов. На рисунках \ref{jpg-comparison-c} и \ref{pdf-comparison-c} представлена зависимость числа RPS (англ. requests per second -- числа запросов в секунду) от числа конкурентных запросов для jpg и pdf файлов соответственно.
 
 \captionsetup{singlelinecheck = false, justification=centering}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.9]{img/jpg.jpg}
-	\caption{Зависимость p50 от числа запросов (jpg)}
-	\label{jpg-comparison-n}
-\end{figure}
-
-Результаты аналогичного замера для pdf-файла размером 2.11 Мб представлены на рисунке \ref{pdf-comparison-n}.
-
-\captionsetup{singlelinecheck = false, justification=centering}
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.9]{img/pdf.jpg}
-	\caption{Зависимость p50 от числа запросов (pdf)}
-	\label{pdf-comparison-n}
-\end{figure}
-
-Также были произведены замеры при постоянном числе запросов 1000 и изменяющимся максимальным числом конкурентных запросов. На рисунках \ref{jpg-comparison-c} и \ref{pdf-comparison-c} представлена зависимость p50 от числа конкурентных запросов для jpg и pdf файла соответственно.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.9]{img/jpg-c.jpg}
-	\caption{Зависимость p50 от числа конкурентных запросов (jpg)}
+	\includegraphics[scale=1.1]{img/jpg-c.png}
+	\caption{Зависимость RPS от числа конкурентных запросов (jpg)}
 	\label{jpg-comparison-c}
 \end{figure}
 
 \captionsetup{singlelinecheck = false, justification=centering}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.9]{img/pdf-c.jpg}
-	\caption{Зависимость p50 от числа конкурентных запросов (pdf)}
+	\includegraphics[scale=1.1]{img/pdf-c.png}
+	\caption{Зависимость RPS от числа конкурентных запросов (pdf)}
 	\label{pdf-comparison-c}
 \end{figure}
 
 \subsection*{Вывод}
 
-В результате проведенных замеров установлено, что разработанный сервер работает медленнее, чем nginx. Время ответа на запросы разработанным сервером в 1.5 -- 2 раза больше, чем время ответа от nginx. Это может быть связано с тем, что nginx -- более оптимизированное программное обеспечение, предназначенное для профессионалов~\cite{nginx-tuning}.
+В результате проведенных замеров установлено, что разработанный сервер работает, как правило, медленнее, чем nginx. Время ответа на запросы разработанным сервером в 1.05 -- 1.54 раза больше. Это может быть связано с тем, что nginx -- более оптимизированное программное обеспечение, предназначенное для профессионалов~\cite{nginx-tuning}, а также оптимизацией сторонних процессов, таких как логирование и мониторинг дочерних процессов.
 
-Однако нагрузочное тестирование показало, что сервер работает верно: программа корректно обработала все запросы, посылаемые ей в рамках исследования.
+Однако нагрузочное тестирование показало, что сервер работает стабильно: программа корректно обработала все запросы, посылаемые ей в рамках исследования.
 
 \pagebreak

@@ -49,7 +49,7 @@ int check_state(http_parse_request* request, int fd, server_item* item)
         }
         else
         {
-            END_CLIENT(item, fd, request); // TODO: ??????
+            END_CLIENT(item, fd, request);
         }
         
         errors += 1;
@@ -111,7 +111,8 @@ void process_events(struct epoll_event* events,
     ssize_t events_count, 
     int server_socket, 
     server_item *item, 
-    int* processed_clients)
+    int* processed_clients,
+    int epoll_fd)
 {
     for (int i = 0; i < events_count; i++) 
     {
@@ -119,7 +120,8 @@ void process_events(struct epoll_event* events,
         socklen_t client_addrlen = sizeof client_addr;
 
         /* accept up all connections. we're non-blocking, -1 == no more connections */
-        if (events[0].events & EPOLLIN) 
+        /*
+        if (events[i].events & EPOLLIN) 
         {
             int fd = accept(server_socket, (struct sockaddr *)&client_addr, &client_addrlen);
             if (fd < 0)
@@ -128,6 +130,50 @@ void process_events(struct epoll_event* events,
                 continue;
             }
 
+            item->state = SERVER_ITEM_BUSY;
+            http_parse_request* request = read_request(fd);
+            
+            (*processed_clients)++;
+
+            if (check_request_errors(request, fd, item) > 0)
+                continue;
+
+            config_host *host;
+            if (!(host = get_host(fd, request, item)))
+                continue;
+
+            check_root_file(request);
+            remove_params(request->path);
+
+            log(INFO, "Returning file %s", request->path);
+            respond_file(fd, host, request);
+            END_CLIENT(item, fd, request);
+
+            item->state = SERVER_ITEM_AVAILABLE;
+
+            close(fd);
+        }
+        */
+        if (events[i].data.fd == server_socket) 
+        {
+            int fd = accept(server_socket, (struct sockaddr *)&client_addr, &client_addrlen);
+            if(fd < 0)
+            {
+                perror("accept");
+                continue;
+            }
+            struct epoll_event ev;
+            ev.events = EPOLLIN | EPOLLET;
+            ev.data.fd = fd;
+            if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, fd, &ev) < 0) 
+            {
+                fprintf(stderr, "epoll set insertion error: fd=%d", fd);
+                return -1;
+            }
+        }
+        else
+        {
+            int fd = events[i].data.fd;
             item->state = SERVER_ITEM_BUSY;
             http_parse_request* request = read_request(fd);
             
@@ -186,7 +232,7 @@ void start_processing_loop(int epoll_fd, config* config, int server_socket, serv
         
         log(INFO, "Server thread woke up with %lu events", events_count);
 
-        process_events(events, events_count, server_socket, item, &processed_clients); 
+        process_events(events, events_count, server_socket, item, &processed_clients, epoll_fd); 
     }
 }
 
@@ -346,7 +392,7 @@ int configure_epoll(int server_socket)
     event.data.ptr = (void *)((uintptr_t)server_socket);
     event.events = EPOLLIN | EPOLLERR | EPOLLEXCLUSIVE;
 
-    if(epoll_ctl(epoll_fd, EPOLL_CTL_ADD, server_socket, &event) != 0) 
+    if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, server_socket, &event) != 0) 
     {
         log(ERROR, "Unable to set socket for epoll: epoll_ctl failed");
         exit(EXIT_FAILURE);
